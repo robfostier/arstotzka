@@ -19,8 +19,10 @@ tech@hermes:~$ sudo apt upgrade -y
 
 ```bash
 tech@hermes:~$ sudo apt install xfce4 xfce4-goodies -y
-tech@hermes:~$ echo "exec startxfce4" >> ~/.xinitrc
-tech@hermes:~$ echo "startx" >> ~/.profile
+tech@hermes:~$ echo "exec startxfce4" >> .xinitrc
+tech@hermes:~$ echo "startx" >> .profile
+tech@hermes:~$ sudo apt remove lightdm -y
+tech@hermes:~$ reboot
 ```
 
 ## Configuration Host-only
@@ -32,7 +34,7 @@ tech@hermes:~$ sudo nano /etc/netplan/50-cloud-init.yaml
 ```yaml
 ens37:
     dhcp4: false
-    addresses: [10.0.0.1/24]
+    addresses: [10.0.0.10/24]
 ```
 
 ```bash
