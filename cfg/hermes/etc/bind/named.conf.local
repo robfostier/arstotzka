@@ -8,5 +8,5 @@
 
 zone "grestin.local" {
 	type master;
-	file "/etc/bind/db.grestin.local"
+	file "/etc/bind/db.grestin.local";
 };

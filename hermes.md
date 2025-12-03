@@ -1,14 +1,19 @@
 # hermes - Serveur DHCP + DNS
 Ubuntu 24.04.3 Live Server
 
-User : Technician
-server : hermes
+Your name : Technician
+Your servers name : hermes
 username : tech
 password : Sup1nf0 
 
 cartes réseau :
 VMnet8 (NAT)
 VMnet10 (host-only) : 10.0.0.0/24
+
+```bash
+tech@hermes:~$ sudo apt update
+tech@hermes:~$ sudo apt upgrade -y
+```
 
 ## Installation XFCE
 
@@ -95,7 +100,7 @@ tech@hermes:~$ sudo nano /etc/bind/named.conf.local
 ```text
 zone "grestin.local" {
 	type master;
-	file "/etc/bind/db.grestin.local"
+	file "/etc/bind/db.grestin.local";
 };
 ```
 
