@@ -1,4 +1,4 @@
-# hermes - Serveur DHCP + DNS
+# ares - Serveur Router + Firewall
 Ubuntu 24.04.3 Live Server
 
 Name : Technician
@@ -70,8 +70,8 @@ tech@ares:~$ sudo iptables -F
 tech@ares:~$ sudo iptables -t nat -F
 tech@ares:~$ sudo iptables -t mangle -F
 tech@ares:~$ sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
-tech@ares:~$ sudo iptables -A FORWARD -i ens37 -o ens33 -j ACCEPT
-tech@ares:~$ sudo iptables -A FORWARD -i ens33 -o ens37 -m state --state ESTABLISHED,RELATED -j ACCEPT
+tech@ares:~$ sudo iptables -A FORWARD -i ens34 -o ens33 -j ACCEPT
+tech@ares:~$ sudo iptables -A FORWARD -i ens33 -o ens34 -m state --state ESTABLISHED,RELATED -j ACCEPT
 tech@ares:~$ sudo apt install iptables-persistent -y
 tech@ares:~$ sudo netfilter-persistent save
 tech@ares:~$ sudo netfilter-persistent reload

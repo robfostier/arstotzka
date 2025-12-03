@@ -130,3 +130,9 @@ hermes	IN	A	10.0.0.10
 metis	IN	A	10.0.0.20
 athena	IN	A	10.0.0.30
 ```
+
+```bash
+tech@hermes:~$ sudo systemctl disable --now systemd-resolved
+tech@hermes:~$ sudo rm /etc/resolv.conf
+tech@hermes:~$ echo "nameserver 10.0.0.10" | sudo tee /etc/resolv.conf
+```
