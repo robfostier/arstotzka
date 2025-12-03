@@ -51,9 +51,9 @@ Proxy Squid installé pour filtrer sites
 # Addressage
 ## LAN : 10.0.0.0/24 (VMnet10 Host-only)
   .1 : Firewall
-  .2  : DHCP + DNS
-  .10 : Serveur Interne
+  .10  : DHCP + DNS
   .20 : NAS
+  .30 : Serveur Interne
   Range DHCP 100-199 : Clients (postes inspecteurs)
 
 ## LAN : 192.168.197.0/24 (VMnet8 NAT)
