@@ -1,8 +1,8 @@
 # hermes - Serveur DHCP + DNS
 Ubuntu 24.04.3 Live Server
 
-Your name : Technician
-Your servers name : ares
+Name : Technician
+Server name : ares
 username : tech
 password : Sup1nf0 
 
@@ -40,7 +40,7 @@ ens33:
     routes:
         - to: 0.0.0.0/0
           via: 192.168.197.2
-ens37:
+ens34:
     dhcp4: false
     addresses: [10.0.0.1/24]
 ```

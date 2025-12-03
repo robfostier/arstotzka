@@ -1,8 +1,8 @@
 # hermes - Serveur DHCP + DNS
 Ubuntu 24.04.3 Live Server
 
-Your name : Technician
-Your servers name : hermes
+Name : Technician
+Server name : hermes
 username : tech
 password : Sup1nf0 
 
