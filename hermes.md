@@ -50,9 +50,6 @@ tech@hermes:~$ sudo nano /etc/dhcp/dhcpd.conf
 ```
 
 ```pqsql
-option domain-name "example.org";
-option domain-name-servers ns1.example.org, ns2.example.org;
-
 default-lease-time 600;
 max-lease-time 7200;
 
@@ -71,3 +68,54 @@ tech@hermes:~$ sudo systemctl enable isc-dhcp-server
 
 ## DNS
 
+```bash
+tech@hermes:~$ sudo apt install bind9 -y
+tech@hermes:~$ sudo nano /etc/bind/named.conf.options
+```
+
+```text
+recursion yes;
+allow-recursion { 10.0.0.0/24; };
+
+allow-query { any; };
+dnssec-validation auto;
+
+listen-on { 10.0.0.10; };
+
+forwarders {
+	1.1.1.1;
+	8.8.8.8;
+};
+```
+
+```bash
+tech@hermes:~$ sudo nano /etc/bind/named.conf.local
+```
+
+```text
+zone "grestin.local" {
+	type master;
+	file "/etc/bind/db.grestin.local"
+};
+```
+
+```bash
+tech@hermes:~$ sudo cp /etc/bind/db.local /etc/bind/db.grestin.local 
+tech@hermes:~$ sudo nano /etc/bind/db.grestin.local
+```
+
+```text
+$TTL	604800
+@	IN	SOA	hermes.grestin.local. root.grestin.local. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	hermes.grestin.local.
+ares	IN	A	10.0.0.1
+hermes	IN	A	10.0.0.10
+metis	IN	A	10.0.0.20
+athena	IN	A	10.0.0.30
+```
