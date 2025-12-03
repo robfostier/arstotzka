@@ -35,6 +35,11 @@ tech@hermes:~$ sudo nano /etc/netplan/50-cloud-init.yaml
 ens37:
     dhcp4: false
     addresses: [10.0.0.10/24]
+    routes:
+        - to: 0.0.0.0/0
+          via: 10.0.0.1
+    nameservers:
+        addresses: [10.0.0.10]
 ```
 
 ```bash
