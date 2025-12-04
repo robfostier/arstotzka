@@ -1,7 +1,9 @@
 firewall :
-proxy squid (filtrer trafic)
+    proxy squid (filtrer trafic)
 
 internal server
-nas
+    fix mailbox (maintenant que sur nas)
+    database
+    communication avec client
 external server
 client

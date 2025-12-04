@@ -129,6 +129,9 @@ ares	IN	A	10.0.0.1
 hermes	IN	A	10.0.0.10
 metis	IN	A	10.0.0.20
 athena	IN	A	10.0.0.30
+
+; MX record for internal mail
+@       IN      MX      10 athena.grestin.local.
 ```
 
 ```bash

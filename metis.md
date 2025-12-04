@@ -46,21 +46,44 @@ ens33:
 tech@metis:~$ sudo netplan apply
 ```
 
+## RAID 5
+
+4 disques durs virtuels de 2GB chacun sont ajoutés sur le serveur à froid.
+
+```bash
+tech@metis:~$ sudo apt install mdadm -y
+tech@metis:~$ sudo parted /dev/sdb mklabel gpt
+tech@metis:~$ sudo parted /dev/sdc mklabel gpt
+tech@metis:~$ sudo parted /dev/sdd mklabel gpt
+tech@metis:~$ sudo parted /dev/sde mklabel gpt
+tech@metis:~$ sudo mdadm --create --verbose /dev/md0 --level=5 --raid-devices=4 /dev/sdb /dev/sdc /dev/sdd /dev/sde
+tech@metis:~$ sudo mkfs.ext4 /dev/md0
+tech@metis:~$ sudo mkdir -p /srv/raid5
+tech@metis:~$ sudo mount /dev/md0 /srv/raid5
+```
+
 ## NAS
 
 ```bash
 tech@metis:~$ sudo apt install nfs-kernel-server -y
-tech@metis:~$ sudo mkdir -p /srv/nas_share
-tech@metis:~$ sudo chown nobody:nogroup /srv/nas_share
-tech@metis:~$ sudo chmod 777 /srv/nas_share
+tech@metis:~$ sudo mkdir /srv/raid5/share
+tech@metis:~$ sudo chown nobody:nogroup /srv/raid5/share
+tech@metis:~$ sudo chmod 777 /srv/raid5/share
 tech@metis:~$ sudo nano /etc/exports
 ```
 
 ```text
-/srv/nas_share 10.0.0.30(rw,sync,no_subtree_check)
+/srv/raid5/share 10.0.0.30(rw,sync,no_subtree_check)
 ```
 
 ```bash
 tech@metis:~$ sudo exportfs -ra
 tech@metis:~$ sudo systemctl restart nfs-kernel-server
+```
+
+## File Structure
+
+```bash
+tech@metis:/srv/raid5/share$ mkdir cases mail scripts 
+tech@metis:/srv/raid5/share/cases$ mkdir pending accepted rejected
 ```

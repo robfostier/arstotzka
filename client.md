@@ -13,4 +13,4 @@ VMnet10 (host-only) : 10.0.0.0/24
 inspector@station-001:~$ sudo apt update
 inspector@station-001:~$ sudo apt upgrade -y
 inspector@station-001:~$ sudo apt install open-vm-tools -y
-```
+``` 
