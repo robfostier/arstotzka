@@ -1,7 +1,7 @@
 network:
   version: 2
   ethernets:
-    ens37:
+    ens33:
       dhcp4: false
       addresses: [10.0.0.10/24]
       routes:
