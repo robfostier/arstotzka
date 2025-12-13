@@ -22,7 +22,7 @@ définir liste de critères à respecter, sinon automatiquement clean up archive
 
 ## Mail Server
 
-## DB SQLite
+## DB mySQL
 
 TABLE CASES
 id_alien	nom_fichier		status		date		comment		id_inspector

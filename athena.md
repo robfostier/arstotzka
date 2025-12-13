@@ -91,7 +91,7 @@ tech@athena:~$ sudo apt install postfix dovecot-core dovecot-imapd -y
     inet_interfaces = all
     inet_protocols = ipv4
 
-    home_mailbox = /mnt/nas/share/mail/{$user}/Maildir/
+    home_mailbox = /mnt/nas/share/mail/${user}/Maildir/
     smtpd_helo_required = yes
     ```
 
@@ -113,7 +113,36 @@ tech@athena:~$ sudo apt install postfix dovecot-core dovecot-imapd -y
 
     protocols = imap
     disable_plaintext_auth = no
-    mail_location = maildir:/mnt/nas/share/mail/%u/Maildir
+    mail_location = maildir:/mnt/nas/share/mail/%n/Maildir
+    ```
+
+    ```bash
+    tech@athena:~$ sudo nano /etc/dovecot/conf.d/10-mail.conf
+    ```
+
+    ```ini
+    mail_location = maildir:/mnt/nas/mail/%n/Maildir
+
+    namespace inbox {
+    inbox = yes
+    }
+
+    mail_privileged_group = mail
+
+    protocol !indexer-worker {
+    }
+    ```
+    ```bash
+    tech@athena:~$ sudo nano /etc/dovecot/conf.d/90-plugin.conf
+    ```
+
+    ```ini
+    plugin {
+        autocreate = Trash
+        autocreate2 = Sent
+        autosubscribe = Trash
+        autosubscribe2 = Sent
+    }
     ```
 
     ```bash
@@ -147,3 +176,61 @@ tech@athena:~$ sudo apt install postfix dovecot-core dovecot-imapd -y
     a select INBOX
     a fetch 1 body[]
     ```
+
+## Configuraton Active Directory
+
+```bash
+tech@athena:~$ sudo apt install realmd sssd adcli samba-common-bin krb5-user packagekit -y
+tech@athena:~$ sudo nano /etc/hosts
+```
+
+```
+10.0.0.10 hermes.grestin.local hermes
+```
+
+```bash
+tech@athena:~$ sudo nano /etc/resolv.conf
+```
+
+```
+nameserver 10.0.0.10
+```
+
+```bash
+tech@athena:~$ kinit Administrator
+tech@athena:~$ klist
+tech@athena:~$ sudo realm join --user=Administrator GRESTIN.LOCAL
+tech@athena:~$ sudo nano /etc/sssd/sssd.conf
+```
+
+```ini
+[sssd]
+domains = grestin.local
+config_file_version = 2
+services = nss, pam
+
+[domain/grestin.local]
+default_shell = /bin/bash
+krb5_store_password_if_offline = True
+cache_credentials = True
+krb5_realm = GRESTIN.LOCAL
+realmd_tags = manages-system joined-with-adcli
+id_provider = ad
+fallback_homedir = /home/%u%d
+ad_domain = grestin.local
+use_fully_qualified_names = True
+ldap_id_mapping = True
+access_provider = ad
+auth_provider = ad
+
+enumerate = True
+```
+
+```bash
+tech@athena:~$ echo "tech@GRESTIN.LOCAL ALL=(ALL) ALL" >> /etc/sudoers.d/ad-tech
+tech@athena:~$ echo "session required pam_mkhomedir.so skel=/etc/skel/ umask=0077" >> /etc/pam.d/common-session
+tech@athena:~$ echo "session required pam_mkhomedir.so skel=/etc/skel/ umask=0077" >> /etc/pam.d/common-session-noninteractive
+tech@athena:~$ sudo systemctl restart sssd
+tech@athena:~$ sudo sss_cache -E
+tech@athena:~$ su -t tech@grestin.local
+```

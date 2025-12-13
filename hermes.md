@@ -165,3 +165,15 @@ tech@hermes:~$ sudo systemctl enable isc-dhcp-server
   ```
 
 ## Groupes et utilisateurs
+
+```bash
+tech@hermes:~$ sudo samba-tool user create tech Sup1nf0
+tech@hermes:~$ sudo samba-tool user create IT Sup1nf0
+tech@hermes:~$ sudo samba-tool group addmembers IT tech
+tech@hermes:~$ sudo samba-tool user create inspector Sup1nf0
+tech@hermes:~$ sudo samba-tool user create Inspectors Sup1nf0
+tech@hermes:~$ sudo samba-tool group addmembers Inspectors inspector
+tech@hermes:~$ sudo samba-tool computer create METIS
+tech@hermes:~$ sudo samba-tool computer create ATHENA
+tech@hermes:~$ sudo samba-tool computer create station-001
+```

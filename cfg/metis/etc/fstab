@@ -1,0 +1,1 @@
+/dev/md0 /srv/raid5 ext4 defaults 0 2
