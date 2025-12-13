@@ -48,5 +48,5 @@ mynetworks = 127.0.0.0/8 10.0.0.0/24
 inet_interfaces = all
 inet_protocols = ipv4
 
-home_mailbox = /mnt/nas/share/mail/${user}/Maildir/
+home_mailbox = /mnt/nas/mail/${user}/Maildir/
 smtpd_helo_required = yes

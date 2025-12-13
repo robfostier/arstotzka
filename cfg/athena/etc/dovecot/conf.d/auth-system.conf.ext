@@ -1,0 +1,8 @@
+passdb {
+    driver = pam
+    args = login
+}
+
+userdb {
+    driver = passwd
+}
