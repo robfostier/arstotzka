@@ -137,7 +137,20 @@ Elle est utilisée pour le transfert de dossiers de Zeus à Metis en SFTP, mais 
 <h4>Squid</h4>
 </li>
 </ul>
-<p>Un service Squid est mis en place une fois la totalité des équipements du réseau interne configurés, pour filtrer le trafic entrant. Seuls les services du gouvernement et le serveur Zeus sont autorisés à communiquer avec le réseau interne.</p>
+<p>Un service Squid est mis en place une fois la totalité des équipements du réseau interne configurés, pour filtrer le trafic entrant. Seuls les services du gouvernement et le serveur Zeus sont autorisés à communiquer avec le réseau interne, réduisant ainsi la surface d'attaque.</p>
+<p>Les règles d'accès sont mises en places :</p>
+<ul>
+<li><code>http_access allow localnet zeus</code> : Autorise le réseau interne vers Zeus</li>
+<li><code>http_access allow localnet gov_dns</code> : Autorise les DNS gouvernementaux</li>
+<li><code>http_access allow localnet gov_sites</code> : Autorise les sites gouvernementaux</li>
+<li><code>http_access allow localhost</code> : Autorise localhost</li>
+<li><code>http_access deny all</code> : Bloque tout le reste</li>
+</ul>
+<p>On ajoute également deux règles aux iptables :</p>
+<ul>
+<li><code>iptables -A INPUT -s 10.0.0.0/24 -p tcp --dport 3128 -j ACCEPT</code> : autorise les machines du réseau interne (10.0.0.0/24) à se connecter au proxy Squid sur Ares (port 3128).</li>
+<li><code>iptables -A INPUT -p tcp --dport 3128 -s 192.168.197.0/24 -j DROP</code> : bloque toute tentative de connexion au proxy Squid (port 3128) provenant du réseau DMZ.</li>
+</ul>
 <hr>
 <h3 id="hermes---serveur-ad--dns--dhcp">hermes - Serveur AD + DNS + DHCP </h3>
 <p>Nous définissons l'adressage IPv4 du serveur.</p>
@@ -385,8 +398,14 @@ La configuration du montage est définie dans le fichier <code>/etc/fstab</code>
 </ul>
 <p>Un script est également créé pour vérifier dans la base de donnée du serveur Athena si un ID d'immigrant est autorisé à rentrer dans le pays.</p>
 <ul>
-<li><code>search.sh</code> : ce script s'utilise avec la commande <code>./search.sh &lt;ID&gt;</code>. Il parcourt les logs <code>/mnt/nas/cases/cases.log</code>, et cherche une candidature rejetée avec un ID correspondant. On considère que tout immigrant rejeté une fois est rejeté pour toujours, donc si le script trouve le même ID dans les logs de rejet on peut définir que l'immigrant est interdit de territoire.</li>
+<li>
+<p><code>search.sh</code> : ce script s'utilise avec la commande <code>./search.sh &lt;ID&gt;</code>. Il parcourt les logs <code>/mnt/nas/cases/cases.log</code>, et cherche une candidature rejetée avec un ID correspondant. On considère que tout immigrant rejeté une fois est rejeté pour toujours, donc si le script trouve le même ID dans les logs de rejet on peut définir que l'immigrant est interdit de territoire.</p>
+</li>
+<li>
+<h4>Proxy Squid</h4>
+</li>
 </ul>
+<p>Nous définissons un proxy aux addresses <code>http://10.0.0.1:3128</code> et <code>https://10.0.0.1:3128</code>. Ces addresses correspondent aux ports de Squid sur le Firewall. Ainsi, seuls les sites du gouvernement peuvent être consultés depuis le poste client.</p>
 
       </div>
       

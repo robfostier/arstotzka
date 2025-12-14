@@ -78,3 +78,42 @@ tech@ares:~$ sudo apt install iptables-persistent -y
 tech@ares:~$ sudo netfilter-persistent save
 tech@ares:~$ sudo netfilter-persistent reload
 ```
+
+## Squid
+
+```bash
+tech@ares:~$ sudo apt install squid -y
+tech@ares:~$ sudo nano /etc/squid/squid.conf
+```
+
+```conf
+http_port 3128
+
+acl localnet src 10.0.0.0/24
+acl dmz src 192.168.197.0/24
+
+acl zeus dst 192.168.197.10
+
+acl gov_dns dst 1.1.1.1
+acl gov_dns dst 8.8.8.8
+
+acl gov_sites dstdomain .gov
+
+http_access allow localnet zeus
+http_access allow localnet gov_dns
+http_access allow localnet gov_sites
+http_access allow localhost
+http_access deny all
+
+cache deny all
+
+access_log /var/log/squid/access.log
+cache_log /var/log/squid/cache.log
+```
+
+```bash
+tech@ares:~$ sudo systemctl restart squid
+tech@ares:~$ sudo systemctl enable squid
+tech@ares:~$ sudo iptables -A INPUT -s 10.0.0.0/24 -p tcp --dport 3128 -j ACCEPT
+tech@ares:~$ sudo iptables -A INPUT -p tcp --dport 3128 -s 192.168.197.0/24 -j DROP
+```

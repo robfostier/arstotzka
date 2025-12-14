@@ -136,7 +136,18 @@ Cette règle autorise le trafic retour du réseau interne vers Internet dans le 
 
 - #### Squid
 
-Un service Squid est mis en place une fois la totalité des équipements du réseau interne configurés, pour filtrer le trafic entrant. Seuls les services du gouvernement et le serveur Zeus sont autorisés à communiquer avec le réseau interne.
+Un service Squid est mis en place une fois la totalité des équipements du réseau interne configurés, pour filtrer le trafic entrant. Seuls les services du gouvernement et le serveur Zeus sont autorisés à communiquer avec le réseau interne, réduisant ainsi la surface d'attaque.
+
+Les règles d'accès sont mises en places :
+- `http_access allow localnet zeus` : Autorise le réseau interne vers Zeus
+- `http_access allow localnet gov_dns` : Autorise les DNS gouvernementaux
+- `http_access allow localnet gov_sites` : Autorise les sites gouvernementaux
+- `http_access allow localhost` : Autorise localhost
+- `http_access deny all` : Bloque tout le reste
+
+On ajoute également deux règles aux iptables :
+- `iptables -A INPUT -s 10.0.0.0/24 -p tcp --dport 3128 -j ACCEPT` : autorise les machines du réseau interne (10.0.0.0/24) à se connecter au proxy Squid sur Ares (port 3128).
+- `iptables -A INPUT -p tcp --dport 3128 -s 192.168.197.0/24 -j DROP` : bloque toute tentative de connexion au proxy Squid (port 3128) provenant du réseau DMZ.
 
 ---
 
@@ -437,6 +448,10 @@ Pour la classification des candidatures, un script est créé :
 
 Un script est également créé pour vérifier dans la base de donnée du serveur Athena si un ID d'immigrant est autorisé à rentrer dans le pays.
 - `search.sh` : ce script s'utilise avec la commande `./search.sh <ID>`. Il parcourt les logs `/mnt/nas/cases/cases.log`, et cherche une candidature rejetée avec un ID correspondant. On considère que tout immigrant rejeté une fois est rejeté pour toujours, donc si le script trouve le même ID dans les logs de rejet on peut définir que l'immigrant est interdit de territoire. 
+
+- #### Proxy Squid
+
+Nous définissons un proxy aux addresses `http://10.0.0.1:3128` et `https://10.0.0.1:3128`. Ces addresses correspondent aux ports de Squid sur le Firewall. Ainsi, seuls les sites du gouvernement peuvent être consultés depuis le poste client.
 
 
 

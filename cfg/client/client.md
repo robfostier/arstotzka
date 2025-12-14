@@ -149,3 +149,10 @@ export PATH=$PATH:/mnt/nas/scripts/inspector-tools
 ```bash
 inspector@grestin.local@station-001:~$ source ~/.bashrc
 ```
+
+## Squid
+
+```bash
+tech@station-001:~$ export http_proxy="http://10.0.0.1:3128"
+tech@station-001:~$ export https_proxy="http://10.0.0.1:3128"
+```
