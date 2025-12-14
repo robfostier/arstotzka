@@ -33,5 +33,5 @@ mv "$BASE/pending/$CASE" "$BASE/$DEST/" || {
 
 echo "$(date) $STATUS , ID $ID $CASE by $USER" >> "$LOG"
 
-echo "AUTHORIZED"
+echo "$(date) $STATUS , ID $ID $CASE by $USER"
 exit 0

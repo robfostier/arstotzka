@@ -75,7 +75,7 @@ tech@metis:~$ sudo nano /etc/exports
 ```
 
 ```text
-/srv/raid5/share 10.0.0.30(rw,sync,no_subtree_check)
+/srv/raid5/share 10.0.0.0/24(rw,sync,no_subtree_check)
 ```
 
 ```bash

@@ -1,0 +1,401 @@
+<!DOCTYPE html><html><head>
+      <title>README</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\Robinson\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="plpic2---glory-to-arstotzka">pLPIC2 - Glory to Arstotzka </h1>
+<p>Robinson Fostier, Anthony Guarin</p>
+<hr>
+<h2 id="objectifs-du-projet">Objectifs du projet </h2>
+<p>L’objectif de ce projet est de concevoir et déployer une infrastructure informatique sécurisée sous Linux.</p>
+<p>Plus précisément, le projet nécessite de :</p>
+<ul>
+<li>Permettre aux immigrants de déposer leurs candidatures sous forme d’archives sur un serveur de fichiers externe</li>
+<li>Vérifier automatiquement la conformité des archives déposées (structure, formats, nommage, critères gouvernementaux)</li>
+<li>Supprimer ou rejeter les fichiers non conformes via un script de tri automatisé</li>
+<li>Transférer les dossiers valides vers un serveur de fichiers interne sécurisé</li>
+<li>Assurer la haute disponibilité des données grâce à un système de stockage tolérant aux pannes</li>
+<li>Notifier les inspecteurs par courrier électronique interne de l’arrivée de nouveaux dossiers</li>
+<li>Fournir aux inspecteurs des outils simples pour :
+<ul>
+<li>Consulter les dossiers</li>
+<li>Accepter ou refuser un immigrant</li>
+<li>Classer les dossiers dans les répertoires appropriés</li>
+<li>Rechercher un immigrant par numéro d’identification et vérifier son statut</li>
+</ul>
+</li>
+</ul>
+<p>La mise en place de cette infrastructure nécessite la création de plusieurs serveurs spécialisés et d'au moins un poste client inspecteur.</p>
+<hr>
+<h2 id="infrastructure">Infrastructure </h2>
+<p><img src="diagramme_infrastructure.png" alt="Diagramme de l'infrastructure"></p>
+<p>Nous avons décidé de déployer nos serveurs sur deux réseaux distincts :</p>
+<ul>
+<li><code>10.0.0.0/24</code> : Mis en place sur VMWare via une carte réseau en Host-Only, ce réseau contient tous les équipements et services internes.</li>
+<li><code>192.168.197.0/24</code> : Mis en place sur VMware via une carte réseau NAT, ce réseau simule une DMZ pour protéger le réseau interne en controllant le trafic entrant et sortant.</li>
+</ul>
+<p>Le routage entre les deux réseaux est sous la responsabilité du serveur Ares. Ce serveur possède deux interfaces :</p>
+<ul>
+<li><code>192.168.197.254</code></li>
+<li><code>10.0.0.1</code></li>
+</ul>
+<p>Le trafic sortant du réseau interne transite par ce serveur, qui le route vers la passerelle NAT en <code>192.168.197.2</code>.</p>
+<p>Un second serveur est mis en place sur la DMZ, le serveur de téléchargement de fichiers externe (nommé Zeus). Ce serveur permet aux immigrants de déposer leurs candidatures. Les candidatures valides sont ensuite envoyés en SFTP vers le réseau interne par SSH. Il communique avec la DMZ via l'addresse <code>192.168.197.10</code>.</p>
+<p>Sur le réseau interne, trois serveurs supplémentaires sont mis en place :</p>
+<ul>
+<li>Hermes <code>10.0.0.10</code> : Ce serveur possède trois rôles distincts. Il est contrôleur du domaine grestin.local, ainsi que DNS et DHCP sur le réseau interne.</li>
+<li>Metis <code>10.0.0.20</code> : Ce serveur de stockage fournit le NAS du réseau interne. 4 disque durs y sont montés, en RAID5. La partition est paramétrée en NFS, et est partagée aux ordinateurs du domaine. Le partage stocke les dossiers d'immigrants et les boîtes mail du service mail interne.<br>
+Le serveur Zeus peut communiquer via SSH avec Metis.</li>
+<li>Athena <code>10.0.0.30</code> : Ce serveur distribue les services métiers de notre réseau. Il fournit un service mail et une base de donnée mySQL.</li>
+</ul>
+<p>Un poste client station-001 est également mis en place sur le serveur interne. Il récupère une addresse IP dynamique via le serveur Hermes. Les inspecteurs du domaine travaillant sur ce poste peuvent accéder à leurs mails et traiter les dossiers en attente.</p>
+<hr>
+<h2 id="déploiements">Déploiements </h2>
+<p><em>Ce chapitre détaille nos déploiements. Toutes les configurations sont disponibles dans le dossier <code>/cfg/</code> du projet. Un fichier Markdown est également disponible pour chaque équipement, où sont recensées les commandes utilisées pour mettre en place ces configurations.</em></p>
+<h3 id="ares---serveur-router--firewall">ares - Serveur Router + Firewall </h3>
+<p>Nous définissons l'adressage IPv4 du serveur.<br>
+Deux interfaces sont paramétrées comme ceci :</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">ens33</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>192.168.197.254/24<span class="token punctuation">]</span>
+    <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>1.1.1.1<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>
+    <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 0.0.0.0/0
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 192.168.197.2
+<span class="token key atrule">ens34</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.1/24<span class="token punctuation">]</span>
+</code></pre><p>L'interface <code>ens33</code> correspond à la carte réseau NAT. Le choix de l'addresse statique est arbitraire. La connection Internet se fait via la passerelle NAT en <code>192.168.197.2</code>.<br>
+L'interface <code>ens34</code> correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique <code>10.0.0.1</code> car ce serveur fera office de router sur le réseau.</p>
+<ul>
+<li>
+<h4>Routage IPv4</h4>
+</li>
+</ul>
+<p>Après avoir configuré l'addressage du serveur, nous pouvons lui attribuer le rôle de router, en lui permettant de rediriger les paquets qui ne lui sont pas directement addressés, à l'aide de sa table MAC. La table MAC est gérée automatiquement par le kernel.<br>
+Cela se fait en modifiant le fichier <code>/etc/sysctl.conf</code>, avec cette instruction :</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>net.ipv4.ip_forward=1
+</code></pre><ul>
+<li>
+<h4>Règles iptables</h4>
+</li>
+</ul>
+<p>Les règles suivantes permettent de mettre en place la redirection du trafic réseau entre le réseau interne et le réseau externe via le routeur, en utilisant la traduction d’adresses (NAT).</p>
+<ul>
+<li>Activation du NAT</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@ares:~$ <span class="token function">sudo</span> iptables <span class="token parameter variable">-t</span> nat <span class="token parameter variable">-A</span> POSTROUTING <span class="token parameter variable">-o</span> ens33 <span class="token parameter variable">-j</span> MASQUERADE
+</code></pre><p>Cette règle permet de masquer les adresses IP du réseau interne lors de la sortie vers Internet.<br>
+Tous les paquets sortants via l’interface ens33 auront leur adresse source remplacée par celle du routeur, ce qui permet aux machines internes d’accéder à Internet sans être directement exposées.</p>
+<ul>
+<li>Autorisation du trafic sortant depuis le réseau interne</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@ares:~$ <span class="token function">sudo</span> iptables <span class="token parameter variable">-A</span> FORWARD <span class="token parameter variable">-i</span> ens34 <span class="token parameter variable">-o</span> ens33 <span class="token parameter variable">-j</span> ACCEPT
+</code></pre><p>Cette règle autorise le transfert des paquets du réseau interne vers Internet.<br>
+Elle permet aux postes internes (inspecteurs, serveurs internes) d’initier des connexions vers l’extérieur.</p>
+<ul>
+<li>Autorisation des réponses aux connexions établies</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@ares:~$ <span class="token function">sudo</span> iptables <span class="token parameter variable">-A</span> FORWARD <span class="token parameter variable">-i</span> ens33 <span class="token parameter variable">-o</span> ens34 <span class="token parameter variable">-m</span> state <span class="token parameter variable">--state</span> ESTABLISHED,RELATED <span class="token parameter variable">-j</span> ACCEPT
+</code></pre><p>Cette règle autorise uniquement les paquets de réponse provenant d’Internet vers le réseau interne, à condition qu’ils fassent partie d’une connexion déjà établie ou liée à une connexion existante.<br>
+Cela empêche toute connexion entrante non sollicitée.</p>
+<ul>
+<li>Autorisation du trafic entrant supplémentaire</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@ares:~$ <span class="token function">sudo</span> iptables <span class="token parameter variable">-A</span> FORWARD <span class="token parameter variable">-i</span> ens33 <span class="token parameter variable">-o</span> ens34 <span class="token parameter variable">-j</span> ACCEPT
+</code></pre><p>Cette règle permet le transfert du trafic depuis l’interface externe vers l’interface interne.<br>
+Elle est utilisée pour le transfert de dossiers de Zeus à Metis en SFTP, mais doit être contrôlée pour des raisons de sécurité.</p>
+<ul>
+<li>Autorisation des retours de connexions internes</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@ares:~$ <span class="token function">sudo</span> iptables <span class="token parameter variable">-A</span> FORWARD <span class="token parameter variable">-i</span> ens34 <span class="token parameter variable">-o</span> ens33 <span class="token parameter variable">-m</span> state <span class="token parameter variable">--state</span> ESTABLISHED,RELATED <span class="token parameter variable">-j</span> ACCEPT
+</code></pre><p>Cette règle autorise le trafic retour du réseau interne vers Internet dans le cadre de connexions déjà établies, garantissant la continuité des échanges réseau.</p>
+<ul>
+<li>
+<h4>Squid</h4>
+</li>
+</ul>
+<p>Un service Squid est mis en place une fois la totalité des équipements du réseau interne configurés, pour filtrer le trafic entrant. Seuls les services du gouvernement et le serveur Zeus sont autorisés à communiquer avec le réseau interne.</p>
+<hr>
+<h3 id="hermes---serveur-ad--dns--dhcp">hermes - Serveur AD + DNS + DHCP </h3>
+<p>Nous définissons l'adressage IPv4 du serveur.</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">ens33</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.10/24<span class="token punctuation">]</span>
+    <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 0.0.0.0/0
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 10.0.0.1
+    <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.10<span class="token punctuation">]</span>
+</code></pre><p>L'interface <code>ens33</code> correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique <code>10.0.0.10</code> car ce serveur fournira les services AD, DNS et DHCP. Il nous semblait cohérent de lui fournir une addresse basse.<br>
+Nous indiquons l'addresse IP de Ares en passerelle, et sa propre addresse IP en DNS.</p>
+<p>Le fichier <code>/etc/hosts</code> est configuré comme ceci :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>127.0.0.1 localhost
+10.0.0.10 hermes.grestin.local hermes
+</code></pre><ul>
+<li>
+<h4>Active Directory / DNS</h4>
+</li>
+</ul>
+<p>Nous configurons le rôle de contrôleur de domaine et de DNS. Pour l'AD, nous installons samba, krb5 et smbclient. Pour le DNS, nous installons bind9, bind9utils, bind9-dnsutils et winbind.</p>
+<p>Le domaine est configuré ainsi :</p>
+<ul>
+<li>REALM : GRESTIN.LOCAL</li>
+<li>KERBEROS SERVERS : hermes.grestin.local</li>
+<li>ADMINISTRATIVE SERVERS : hermes.grestin.local</li>
+</ul>
+<p>Le DNS est configuré pour permettre la recursion uniquement aux équipements du réseau interne. Cela permet d'empêcher les équipements externes d'accéder aux services DNS de ce serveur. Les requêtes DNS que ce serveur ne sait pas résoudre sont forwardées aux DNS publics <code>1.1.1.1</code> et <code>8.8.8.8</code>.</p>
+<p>Le fichier <code>/etc/krb5.conf</code> est configuré ainsi :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">libdefaults</span><span class="token punctuation">]</span></span>
+    <span class="token key attr-name">default_realm</span> <span class="token punctuation">=</span> <span class="token value attr-value">GRESTIN.LOCAL</span>
+    <span class="token key attr-name">dns_lookup_realm</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span>
+    <span class="token key attr-name">dns_lookup_kdc</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span>
+
+<span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">realms</span><span class="token punctuation">]</span></span>
+    <span class="token key attr-name">GRESTIN.LOCAL</span> <span class="token punctuation">=</span> <span class="token value attr-value">{</span>
+        <span class="token key attr-name">kdc</span> <span class="token punctuation">=</span> <span class="token value attr-value">hermes.grestin.local</span>
+        <span class="token key attr-name">admin_server</span> <span class="token punctuation">=</span> <span class="token value attr-value">hermes.grestin.local</span>
+    }
+</code></pre><p>Les DNS records sont également configurés, en prévision de la mise en place des différents services :</p>
+<ul>
+<li>
+<p>A</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@hermes:~$ samba-tool dns <span class="token function">add</span> hermes.grestin.local grestin.local ares A <span class="token number">10.0</span>.0.1
+tech@hermes:~$ samba-tool dns <span class="token function">add</span> hermes.grestin.local grestin.local metis A <span class="token number">10.0</span>.0.20
+tech@hermes:~$ samba-tool dns <span class="token function">add</span> hermes.grestin.local grestin.local athena A <span class="token number">10.0</span>.0.30
+</code></pre></li>
+<li>
+<p>MX</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>tech@hermes:~$ samba-tool dns <span class="token function">add</span> hermes.grestin.local grestin.local @ MX <span class="token string">"athena.grestin.local 10"</span>
+</code></pre></li>
+<li>
+<h4>DHCP</h4>
+</li>
+</ul>
+<p>Nous configurons le service DHCP du serveur, en installant isc-dhcp-server.<br>
+Les paramètres du DHCP sont configurés dans le fichier <code>/etc/dhcp/dhcpd.conf</code>.</p>
+<pre data-role="codeBlock" data-info="pqsql" class="language-pqsql pqsql"><code>default-lease-time 600;
+max-lease-time 7200;
+
+subnet 10.0.0.0 netmask 255.255.255.0 {
+  range 10.0.0.100 10.0.0.200;
+  option routers 10.0.0.1;
+  option domain-name-servers 10.0.0.10;
+  option domain-name "grestin.local";
+  option netbios-name-servers 10.0.0.10;
+}
+</code></pre><p>Nous définissons une plage de 100 addresses dynamiques, qui devrait convenir pour le nombre de stations d'inspecteurs. Le service DHCP distribue également les informations DNS.</p>
+<ul>
+<li>
+<h4>Groupes et utilisateurs du domaine</h4>
+</li>
+</ul>
+<p>Nous créons deux utilisateurs et deux groupes sur le domaine :</p>
+<ol>
+<li>tech@grestin.local, dans le groupe IT</li>
+<li>inspector@grestin.local, dans le groupe Inspectors</li>
+</ol>
+<p>Cela nous permet de mutualiser les utilisateurs du domaine pour permettre aux inspecteurs d'accéder à leurs boites mails sur n'importe quelle station, et cela facilite également la gestion des permissions d'accès au partage NAS notamment.</p>
+<hr>
+<h3 id="metis---network-attached-storage">metis - Network Attached Storage </h3>
+<p>Nous définissons l'adressage IPv4 du serveur.</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">ens33</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.20/24<span class="token punctuation">]</span>
+    <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 0.0.0.0/0
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 10.0.0.1
+    <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.10<span class="token punctuation">]</span>
+</code></pre><p>L'interface <code>ens33</code> correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique <code>10.0.0.20</code>.<br>
+Nous indiquons l'addresse IP de Ares en passerelle, et l'adresse IP de Hermes en DNS.</p>
+<p>Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.<br>
+L'utilisateur <code>tech@grestin.local</code> est ajoutée à la liste des sudoers du serveur.</p>
+<ul>
+<li>
+<h4>RAID 5</h4>
+</li>
+</ul>
+<p>4 disques durs virtuels de 2GB chacun sont ajoutés sur le serveur à froid.<br>
+Nous installons mdadm pour monter les disques en une partition RAID5.</p>
+<p>La partition est montée sur le dossier <code>/srv/raid5</code>.</p>
+<p>Les informations du montage sont inscrites dans <code>/etc/fstab</code> pour que la partition soit automatiquement montées après chaque redémarrage du serveur :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>/dev/md0 /srv/raid5 ext4 defaults 0 2
+</code></pre><ul>
+<li>
+<h4>NAS</h4>
+</li>
+</ul>
+<p>Nous mettons en place le service de partage NAS, en installant nfs-kernel-server. Nous avons choisi NFS par simplicité car tous les équipements du réseau fonctionnent sur Linux.</p>
+<p>Un dossier <code>share/</code> est créé sur <code>/srv/raid5/</code>. Le partage est paramétré dans le fichier <code>/etc/exports</code> :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>/srv/raid5/share 10.0.0.30(rw,sync,no_subtree_check)
+</code></pre><ul>
+<li>
+<h4>Contenu du partage</h4>
+</li>
+</ul>
+<p>Le partage est structuré ainsi :</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>├──cases/ 
+|   ├── pending/
+|   ├── rejected/
+|   └── accepted/
+├──mail/
+|  ├── tech@grestin.local/Maildir/{cur,new,tmp}
+|  └── inspector@grestin.local/Maildir/{cur,new,tmp}
+└──scripts/
+   └── inspector-tools/
+</code></pre><p>Cela nous permet de mutualiser trois types de données sur le réseau : les candidatures traitées ou en attente de traitement, les boites mails des utilisateurs du domaine, et les scripts utilisés par les inspecteurs.</p>
+<ul>
+<li>
+<h4>SSH</h4>
+</li>
+</ul>
+<p>Nous installons openssh-server sur le serveur afin de permettre la communication SSH avec le serveur de téléchargement de fichiers externe. Les candidatures peuvent ainsi être ajoutées via SFTP par SSH dans le dossier <code>/srv/raid5/share/cases/pending</code>.</p>
+<hr>
+<h3 id="athena---internal-server">athena - Internal Server </h3>
+<p>Nous définissons l'adressage IPv4 du serveur.</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">ens33</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.30/24<span class="token punctuation">]</span>
+    <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 0.0.0.0/0
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 10.0.0.1
+    <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>10.0.0.10<span class="token punctuation">]</span>
+</code></pre><p>L'interface <code>ens33</code> correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique <code>10.0.0.30</code>.<br>
+Nous indiquons l'addresse IP de Ares en passerelle, et l'adresse IP de Hermes en DNS.</p>
+<p>Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.<br>
+L'utilisateur <code>tech@grestin.local</code> est ajoutée à la liste des sudoers du serveur.</p>
+<ul>
+<li>
+<h4>Montage du NAS</h4>
+</li>
+</ul>
+<p>Nous installons nfs-common pour monter le NAS sur le serveur.<br>
+La configuration du montage est définie dans le fichier <code>/etc/fstab</code>.</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0
+</code></pre><ul>
+<li>
+<h4>Mail Server</h4>
+</li>
+</ul>
+<p>Ce serveur distribue le service mail pour le réseau interne.<br>
+Pour la gestion de boîtes mails, nous installons et paramétrons les services dovecot-core, dovecot-imapd et dovecot-lmtpd.</p>
+<p>Dans le fichier <code>/etc/dovecot/conf.d/10-mail.conf</code>, nous paramétrons les boîtes mails pour qu'elles soient créées sur le partage NAS :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code><span class="token key attr-name">mail_location</span> <span class="token punctuation">=</span> <span class="token value attr-value">maildir:/mnt/nas/mail/%n/Maildir</span>
+</code></pre><p>L'accès aux boîtes mails se fait par telnet :</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>tech@grestin.local@athena:~$ telnet localhost 143
+&gt;&gt; a login tech@grestin.local Sup1nf0
+&gt;&gt; a select INBOX
+</code></pre><p>Nous installons également les services postfix et mailutils, qui sont chargés de transporter les mails jusqu'aux boîtes.<br>
+Nous avons décidé de ne pas utiliser les services TLS de Postfix par simplicité. Le reste du paramétrage est classique.</p>
+<hr>
+<h3 id="zeus---external-file-upload-server">zeus - External File Upload Server </h3>
+<p>Ce serveur est configuré sur la DMZ par sécurité car les immigrants peuvent y déposer des fichiers, donc nous avons choisi de l'isoler du réseau interne.</p>
+<p>Nous définissons l'adressage IPv4 du serveur.</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">ens33</span><span class="token punctuation">:</span>
+    <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>192.168.197.10/24<span class="token punctuation">]</span>
+    <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>1.1.1.1<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>
+    <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 0.0.0.0/0
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 192.168.197.2
+        <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span> 10.0.0.0/24
+          <span class="token key atrule">via</span><span class="token punctuation">:</span> 192.168.197.254
+</code></pre><p>L'interface <code>ens33</code> correspond à la carte réseau NAT. Nous attribuons arbitrairement l'IP statique <code>192.168.197.10</code>.<br>
+Nous indiquons deux passerelles :</p>
+<ul>
+<li>
+<p>vers Internet : <code>192.168.197.2</code>, la passerelle du NAT</p>
+</li>
+<li>
+<p>vers le réseau interne  <code>10.0.0.0/24</code>: <code>192.168.197.254</code>, l'interface connectée à la DMZ du serveur Ares. Le trafic envoyé sur ce serveur est ensuite routé vers les équipements du réseau interne.</p>
+</li>
+<li>
+<h4>SFTP</h4>
+</li>
+</ul>
+<p>Nous installons openssh-server pour permettre le transfert de fichier en SFTP vers le serveur NAS du réseau interne.</p>
+<p>Un compte utilisateur immigrant est créé sur le serveur, avec des droits minimum. Les candidatures déposées par les immigrants se font dans le dossier <code>srv/sftp/immigrant/uploads</code>.</p>
+<p>Le paramétrage du SFTP par SSH se fait dans le fichier <code>/etc/ssh/sshd_config</code> :</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>Match User immigrant
+    ChrootDirectory /srv/sftp/immigrant
+    ForceCommand internal-sftp
+    AllowTcpForwarding no
+    X11Forwarding no
+</code></pre><ul>
+<li>
+<h4>Scripts</h4>
+</li>
+</ul>
+<p><em>Les scripts présentés ici sont disponibles dans le dossier <code>/cfg/zeus/srv/scripts</code> du projet.</em></p>
+<p>Deux scripts bash sont créés sur le serveur, à l'addresse <code>/srv/scripts</code> :</p>
+<ul>
+<li><code>cleanup.sh</code> : ce script utilise le service unzip, préalablement installé, pour dézipper les archives déposées par les immigrants et vérifier leurs contenus. Si l'archive traitée contient un fichier .txt et un fichier .pdf, le script vérifie avec la commande <code>grep</code> que l'ID de l'immigrant est bien renseigné. Si c'est le cas, l'archive est déplacée dans le dossier <code>srv/sftp/immigrant/valid</code> et prête à être transférée vers le réseau interne. Sinon, elle est déplacée dans le dossier <code>srv/sftp/immigrant/invalid</code>.</li>
+<li><code>transfer.sh</code>: ce script parcourt l'ensemble des archives dans le dossier <code>srv/sftp/immigrant/valid</code>, et les transfère avec la commande <code>scp</code> vers le NAS, dans le dossier <code>/srv/raid5/share/cases/pending</code>. À chaque archive transmise, un mail est envoyé à <code>inspector@grestin.local</code>. Enfin, l'archive est supprimée.</li>
+</ul>
+<p>Pour chacun de ces scripts, une règle d'automatisation est paramétrée sur un timer de deux minutes, grâce aux fichiers <code>cleanup.service</code>, <code>cleanup.timer</code>, <code>transfer.service</code> et <code>transfer.timer</code> à l'addresse <code>/etc/systemd/system/</code>.</p>
+<hr>
+<h3 id="station-001---client">station-001 - Client </h3>
+<p>Les clients utilisent Ubuntu 24.04.3 Desktop.<br>
+L'addressage IP se fait dynamiquement, via les services de Hermes.</p>
+<p>Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.<br>
+Le join du domaine se fait avec l'utilisateur <code>inspector@grestin.local</code>.</p>
+<ul>
+<li>
+<h4>Montage du NAS</h4>
+</li>
+</ul>
+<p>Nous installons nfs-common pour monter le NAS sur le client.<br>
+La configuration du montage est définie dans le fichier <code>/etc/fstab</code>.</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0
+</code></pre><ul>
+<li>
+<h4>Scripts</h4>
+</li>
+</ul>
+<p><em>Les scripts présentés ici sont disponibles dans le dossier <code>/cfg/metis/srv/raid5/share/scripts/inspector-tools</code> du projet.</em></p>
+<p>Les scripts utilisés par les inspecteurs sont créés sur le partage NAS, dans le dossier <code>/scripts/inspector-tools</code>.</p>
+<p>Pour la classification des candidatures, un script est créé :</p>
+<ul>
+<li><code>case.sh</code> : ce script s'utilise avec la commande <code>./case.sh &lt;accept|reject&gt; &lt;case.zip&gt; &lt;ID&gt;</code>. Le fichier zip ciblé est automatiquement déplacé de <code>/cases/pending/</code> vers <code>/cases/accepted/</code> ou <code>/cases/rejected/</code>. Un log est ajouté au fichier <code>/mnt/nas/cases/cases.log</code>.</li>
+</ul>
+<p>Un script est également créé pour vérifier dans la base de donnée du serveur Athena si un ID d'immigrant est autorisé à rentrer dans le pays.</p>
+<ul>
+<li><code>search.sh</code> : ce script s'utilise avec la commande <code>./search.sh &lt;ID&gt;</code>. Il parcourt les logs <code>/mnt/nas/cases/cases.log</code>, et cherche une candidature rejetée avec un ID correspondant. On considère que tout immigrant rejeté une fois est rejeté pour toujours, donc si le script trouve le même ID dans les logs de rejet on peut définir que l'immigrant est interdit de territoire.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

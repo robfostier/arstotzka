@@ -1,0 +1,1 @@
+10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0

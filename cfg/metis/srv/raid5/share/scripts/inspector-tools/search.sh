@@ -8,9 +8,9 @@ if [ -z "$ID" ]; then
   exit 1
 fi
 
-if grep -q "REJECTED, ID $ID" "$LOG"; then
+if grep -q "REJECTED , ID $ID" "$LOG"; then
   echo "DENIED"
-  exit 1
+  exit 0
 fi
 
 echo "AUTHORIZED"
