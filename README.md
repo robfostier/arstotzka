@@ -288,12 +288,14 @@ Le partage est structuré ainsi :
 |   ├── pending/
 |   ├── rejected/
 |   └── accepted/
-└──mail/
-    ├── tech@grestin.local/Maildir/{cur,new,tmp}
-    └── inspector@grestin.local/Maildir/{cur,new,tmp}
+├──mail/
+|  ├── tech@grestin.local/Maildir/{cur,new,tmp}
+|  └── inspector@grestin.local/Maildir/{cur,new,tmp}
+└──scripts/
+   └── inspector-tools/
 ```
 
-Cela nous permet de mutualiser deux types de données sur le réseau : les candidatures traitées ou en attente de traitement, et les boites mails des utilisateurs du domaine.
+Cela nous permet de mutualiser trois types de données sur le réseau : les candidatures traitées ou en attente de traitement, les boites mails des utilisateurs du domaine, et les scripts utilisés par les inspecteurs.
 
 - #### SSH
 
@@ -409,10 +411,11 @@ Pour chacun de ces scripts, une règle d'automatisation est paramétrée sur un 
 
 ### station-001 - Client
 
-Les clients utilisent Ubuntu 24.04.3 Desktop. Ils rejoignent le domaine à l'installation de l'OS.
+Les clients utilisent Ubuntu 24.04.3 Desktop.
 L'addressage IP se fait dynamiquement, via les services de Hermes. 
 
-L'utilisateur `tech@grestin.local` est ajoutée à la liste des sudoers du client.
+Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.
+Le join du domaine se fait avec l'utilisateur `inspector@grestin.local`.
 
 - #### Montage du NAS
 
@@ -422,6 +425,18 @@ La configuration du montage est définie dans le fichier `/etc/fstab`.
 ```ini
 10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0
 ```
+
+- #### Scripts
+
+*Les scripts présentés ici sont disponibles dans le dossier `/cfg/metis/srv/raid5/share/scripts/inspector-tools` du projet.*
+
+Les scripts utilisés par les inspecteurs sont créés sur le partage NAS, dans le dossier `/scripts/inspector-tools`.
+
+Pour la classification des candidatures, un script est créé :
+- `case.sh` : ce script s'utilise avec la commande `./case.sh <accept|reject> <case.zip> <ID>`. Le fichier zip ciblé est automatiquement déplacé de `/cases/pending/` vers `/cases/accepted/` ou `/cases/rejected/`. Un log est ajouté au fichier `/mnt/nas/cases/cases.log`.
+
+Un script est également créé pour vérifier dans la base de donnée du serveur Athena si un ID d'immigrant est autorisé à rentrer dans le pays.
+- `search.sh` : ce script s'utilise avec la commande `./search.sh <ID>`. Il parcourt les logs `/mnt/nas/cases/cases.log`, et cherche une candidature rejetée avec un ID correspondant. On considère que tout immigrant rejeté une fois est rejeté pour toujours, donc si le script trouve le même ID dans les logs de rejet on peut définir que l'immigrant est interdit de territoire. 
 
 
 
