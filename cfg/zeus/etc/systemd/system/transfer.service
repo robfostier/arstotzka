@@ -1,0 +1,7 @@
+[Unit]
+Description=Transfer valid archives to internal server
+After=cleanup.service
+
+[Service]
+Type=oneshot
+ExecStart=/srv/sftp/immigrant/scripts/transfer.sh

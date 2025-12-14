@@ -1,0 +1,6 @@
+[Unit]
+Description=Immigrant archive cleanup
+
+[Service]
+Type=oneshot
+ExecStart=/srv/sftp/immigrant/scripts/cleanup.sh

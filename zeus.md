@@ -82,56 +82,168 @@ tech@zeus:~$ sudo systemctl restart ssh
 tech@zeus:~$ mkdir -p /srv/sftp/immigrant/scripts
 ```
 
+### - Cleanup
+
 ```bash
-#!/bin/bash
-UPLOAD_DIR="/srv/sftp/immigrant/uploads"
-VALID_DIR="/srv/sftp/immigrant/valid"
-INVALID_DIR="/srv/sftp/immigrant/invalid"
-
-for archive in "$UPLOAD_DIR"/*.zip; do
-    [ -e "$archive" ] || continue
-
-    ID=$(basename "$archive" .zip)
-    TMPDIR=$(mktemp -d)
-    unzip -q "$archive" -d "$TMPDIR"
-
-    if ! ls "$TMPDIR"/*.txt >/dev/null 2>&1; then
-        mv "$archive" "$INVALID_DIR"
-        echo "[REJECT] $ID : can't find .txt"
-        rm -r "$TMPDIR"
-        continue
-    fi
-
-    if ! ls "$TMPDIR"/*.pdf >/dev/null 2>&1; then
-        mv "$archive" "$INVALID_DIR"
-        echo "[REJECT] $ID : can't find .pdf"
-        rm -r "$TMPDIR"
-        continue
-    fi
-
-    mv "$archive" "$VALID_DIR"
-    echo "[OK] $ID : valid archive"
-
-    rm -r "$TMPDIR"
-done
+tech@zeus:~$ sudo nano /srv/sftp/immigrant/scripts/cleanup.sh
 ```
 
 ```bash
 #!/bin/bash
+set -euo pipefail
+
+UPLOAD_DIR="/srv/sftp/immigrant/uploads"
 VALID_DIR="/srv/sftp/immigrant/valid"
-INTERNAL_SERVER="tech@grestin.local@10.0.0.20"
-INTERNAL_PATH="/srv/cases/pending"
+INVALID_DIR="/srv/sftp/immigrant/invalid"
+LOG="/var/log/cleanup.log"
+
+mkdir -p "$VALID_DIR" "$INVALID_DIR"
+touch "$LOG"
+
+for archive in "$UPLOAD_DIR"/*.zip; do
+    [ -e "$archive" ] || exit 0
+
+    ID=$(basename "$archive" .zip)
+    TMPDIR=$(mktemp -d)
+
+    if ! unzip -qq "$archive" -d "$TMPDIR"; then
+        echo "[REJECT] $ID : unzip failed" | tee -a "$LOG"
+        mv "$archive" "$INVALID_DIR"
+        rm -rf "$TMPDIR"
+        continue
+    fi
+
+    # File presence check
+    TXT=$(find "$TMPDIR" -type f -name "*.txt")
+    PDFS=$(find "$TMPDIR" -type f -name "*.pdf")
+
+    if [ -z "$TXT" ]; then
+        echo "[REJECT] $ID : missing .txt" | tee -a "$LOG"
+        mv "$archive" "$INVALID_DIR"
+        rm -rf "$TMPDIR"
+        continue
+    fi
+
+    if [ -z "$PDFS" ]; then
+        echo "[REJECT] $ID : missing .pdf" | tee -a "$LOG"
+        mv "$archive" "$INVALID_DIR"
+        rm -rf "$TMPDIR"
+        continue
+    fi
+
+    # ID check
+    if ! find "$TMPDIR" -type f ! -name "*$ID*" | grep -q .; then
+        mv "$archive" "$VALID_DIR"
+        echo "[OK] $ID : archive valid" | tee -a "$LOG"
+    else
+        echo "[REJECT] $ID : ID mismatch in filenames" | tee -a "$LOG"
+        mv "$archive" "$INVALID_DIR"
+    fi
+
+    rm -rf "$TMPDIR"
+done
+```
+
+```bash
+tech@zeus:~$ sudo nano /etc/systemd/system/cleanup.service
+```
+
+```ini
+[Unit]
+Description=Immigrant archive cleanup
+
+[Service]
+Type=oneshot
+ExecStart=/srv/sftp/immigrant/scripts/cleanup.sh
+```
+
+```bash
+tech@zeus:~$ sudo nano /etc/systemd/system/cleanup.timer
+```
+
+```ini
+[Unit]
+Description=Run cleanup every 2 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=2min
+
+[Install]
+WantedBy=timers.target
+```
+
+### - Transfer
+
+```bash
+tech@zeus:~$ sudo nano /srv/sftp/immigrant/scripts/transfer.sh
+```
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+VALID_DIR="/srv/sftp/immigrant/valid"
+INTERNAL_USER="tech"
+INTERNAL_HOST="10.0.0.20"
+INTERNAL_PATH="/srv/raid5/share/cases/pending"
+LOG="/var/log/transfer.log"
+
+touch "$LOG"
 
 for file in "$VALID_DIR"/*.zip; do
-    [ -e "$file" ] || continue
+    [ -e "$file" ] || exit 0
 
-    scp "$file" "$INTERNAL_SERVER:$INTERNAL_PATH"
+    BASENAME=$(basename "$file")
 
-    echo "New case : $(basename "$file")" \
-    | mail -s "New case" inspector@grestin.local
+    if scp "$file" "$INTERNAL_USER@$INTERNAL_HOST:$INTERNAL_PATH/"; then
+        echo "[TRANSFER] $BASENAME transferred" | tee -a "$LOG"
 
-    rm "$file"
-    echo "[TRANSFER] $(basename "$file") transfered to internal server."
+        echo "New immigration case received: $BASENAME" \
+        | mail -s "New case pending validation" inspector@grestin.local
+
+        rm -f "$file"
+    else
+        echo "[ERROR] Failed to transfer $BASENAME" | tee -a "$LOG"
+    fi
 done
+```
+
+```bash
+tech@zeus:~$ sudo nano /etc/systemd/system/transfer.service
+```
+
+```ini
+[Unit]
+Description=Transfer valid archives to internal server
+After=cleanup.service
+
+[Service]
+Type=oneshot
+ExecStart=/srv/sftp/immigrant/scripts/transfer.sh
+```
+
+```bash
+tech@zeus:~$ sudo nano /etc/systemd/system/transfer.timer
+```
+
+```ini
+[Unit]
+Description=Run transfer every 2 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=2min
+
+[Install]
+WantedBy=timers.target
+```
+
+### - Configuration timers
+
+```bash
+tech@zeus:~$ sudo chmod +x /srv/sftp/immigrant/scripts/*.sh
+tech@zeus:~$ sudo systemctl daemon-reload
+tech@zeus:~$ sudo systemctl enable --now cleanup.timer transfer.timer
 ```
 
