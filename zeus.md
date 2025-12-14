@@ -79,13 +79,13 @@ tech@zeus:~$ sudo systemctl restart ssh
 ## Scripts
 
 ```bash
-tech@zeus:~$ mkdir -p /srv/sftp/immigrant/scripts
+tech@zeus:~$ mkdir -p /srv/scripts
 ```
 
 ### - Cleanup
 
 ```bash
-tech@zeus:~$ sudo nano /srv/sftp/immigrant/scripts/cleanup.sh
+tech@zeus:~$ sudo nano /srv/scripts/cleanup.sh
 ```
 
 ```bash
@@ -154,7 +154,7 @@ Description=Immigrant archive cleanup
 
 [Service]
 Type=oneshot
-ExecStart=/srv/sftp/immigrant/scripts/cleanup.sh
+ExecStart=/srv/scripts/cleanup.sh
 ```
 
 ```bash
@@ -176,7 +176,7 @@ WantedBy=timers.target
 ### - Transfer
 
 ```bash
-tech@zeus:~$ sudo nano /srv/sftp/immigrant/scripts/transfer.sh
+tech@zeus:~$ sudo nano /srv/scripts/transfer.sh
 ```
 
 ```bash
@@ -220,7 +220,7 @@ After=cleanup.service
 
 [Service]
 Type=oneshot
-ExecStart=/srv/sftp/immigrant/scripts/transfer.sh
+ExecStart=/srv/scripts/transfer.sh
 ```
 
 ```bash
@@ -242,7 +242,7 @@ WantedBy=timers.target
 ### - Configuration timers
 
 ```bash
-tech@zeus:~$ sudo chmod +x /srv/sftp/immigrant/scripts/*.sh
+tech@zeus:~$ sudo chmod +x /srv/scripts/*.sh
 tech@zeus:~$ sudo systemctl daemon-reload
 tech@zeus:~$ sudo systemctl enable --now cleanup.timer transfer.timer
 ```

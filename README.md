@@ -74,7 +74,7 @@ ens34:
     addresses: [10.0.0.1/24]
 ```
 
-L'interface `ens33` correspond à la carte réseau VMnat. Le choix de l'addresse statique est arbitraire. La connection Internet se fait via la passerelle NAT en `192.168.197.2`.
+L'interface `ens33` correspond à la carte réseau NAT. Le choix de l'addresse statique est arbitraire. La connection Internet se fait via la passerelle NAT en `192.168.197.2`.
 L'interface `ens34` correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique `10.0.0.1` car ce serveur fera office de router sur le réseau.
 
 - #### Routage IPv4
@@ -352,6 +352,58 @@ tech@grestin.local@athena:~$ telnet localhost 143
 
 Nous installons également les services postfix et mailutils, qui sont chargés de transporter les mails jusqu'aux boîtes.
 Nous avons décidé de ne pas utiliser les services TLS de Postfix par simplicité. Le reste du paramétrage est classique.
+
+---
+
+### zeus - External File Upload Server
+
+Ce serveur est configuré sur la DMZ par sécurité car les immigrants peuvent y déposer des fichiers, donc nous avons choisi de l'isoler du réseau interne.
+
+Nous définissons l'adressage IPv4 du serveur.
+
+```yaml
+ens33:
+    dhcp4: false
+    addresses: [192.168.197.10/24]
+    nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
+    routes:
+        - to: 0.0.0.0/0
+          via: 192.168.197.2
+        - to: 10.0.0.0/24
+          via: 192.168.197.254
+```
+
+L'interface `ens33` correspond à la carte réseau NAT. Nous attribuons arbitrairement l'IP statique `192.168.197.10`.
+Nous indiquons deux passerelles :
+- vers Internet : `192.168.197.2`, la passerelle du NAT
+- vers le réseau interne  `10.0.0.0/24`: `192.168.197.254`, l'interface connectée à la DMZ du serveur Ares. Le trafic envoyé sur ce serveur est ensuite routé vers les équipements du réseau interne.
+
+- #### SFTP
+
+Nous installons openssh-server pour permettre le transfert de fichier en SFTP vers le serveur NAS du réseau interne.
+
+Un compte utilisateur immigrant est créé sur le serveur, avec des droits minimum. Les candidatures déposées par les immigrants se font dans le dossier `srv/sftp/immigrant/uploads`.
+
+Le paramétrage du SFTP par SSH se fait dans le fichier `/etc/ssh/sshd_config` :
+
+``` ini
+Match User immigrant
+    ChrootDirectory /srv/sftp/immigrant
+    ForceCommand internal-sftp
+    AllowTcpForwarding no
+    X11Forwarding no
+```
+
+- #### Scripts
+
+*Les scripts présentés ici sont disponibles dans le dossier `/cfg/zeus/srv/scripts` du projet.*
+
+Deux scripts bash sont créés sur le serveur, à l'addresse `/srv/scripts` :
+- `cleanup.sh` : ce script utilise le service unzip, préalablement installé, pour dézipper les archives déposées par les immigrants et vérifier leurs contenus. Si l'archive traitée contient un fichier .txt et un fichier .pdf, le script vérifie avec la commande `grep` que l'ID de l'immigrant est bien renseigné. Si c'est le cas, l'archive est déplacée dans le dossier `srv/sftp/immigrant/valid` et prête à être transférée vers le réseau interne. Sinon, elle est déplacée dans le dossier `srv/sftp/immigrant/invalid`.
+- `transfer.sh`: ce script parcourt l'ensemble des archives dans le dossier `srv/sftp/immigrant/valid`, et les transfère avec la commande `scp` vers le NAS, dans le dossier `/srv/raid5/share/cases/pending`. À chaque archive transmise, un mail est envoyé à `inspector@grestin.local`. Enfin, l'archive est supprimée.
+
+Pour chacun de ces scripts, une règle d'automatisation est paramétrée sur un timer de deux minutes, grâce aux fichiers `cleanup.service`, `cleanup.timer`, `transfer.service` et `transfer.timer` à l'addresse `/etc/systemd/system/`.
 
 ---
 

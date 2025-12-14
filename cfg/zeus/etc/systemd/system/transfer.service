@@ -4,4 +4,4 @@ After=cleanup.service
 
 [Service]
 Type=oneshot
-ExecStart=/srv/sftp/immigrant/scripts/transfer.sh
+ExecStart=/srv/scripts/transfer.sh
