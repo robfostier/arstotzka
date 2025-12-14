@@ -141,7 +141,7 @@ tech@grestin.local@athena:~$ sudo mount -a
 - ### Postfix
 
     ```bash
-    tech@athena:~$ sudo apt installpostfix mailutils -y 
+    tech@athena:~$ sudo apt install postfix mailutils -y 
     ```
 
     ```bash

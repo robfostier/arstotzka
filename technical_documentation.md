@@ -172,58 +172,11 @@ Nous configurons le rôle de contrôleur de domaine et de DNS. Pour l'AD, nous i
 Le domaine est configuré ainsi :
 - REALM : GRESTIN.LOCAL
 - KERBEROS SERVERS : hermes.grestin.local
-- ADMINISTRATIVE SERVERS: hermes.grestin.local
+- ADMINISTRATIVE SERVERS : hermes.grestin.local
 
-```bash
-tech@hermes:~$ sudo systemctl stop samba-ad-dc smbd nmbd winbind
-tech@hermes:~$ sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak 2>/dev/null
-tech@hermes:~$ sudo samba-tool domain provision --use-rfc2307 --realm=GRESTIN.LOCAL --domain=GRESTIN --server-role=dc --dns-backend=BIND9_DLZ --adminpass='Sup1nf0'
-tech@hermes:~$ sudo nano /etc/bind/named.conf
-```
+Le DNS est configuré pour permettre la recursion uniquement aux équipements du réseau interne. Cela permet d'empêcher les équipements externes d'accéder aux services DNS de ce serveur. Les requêtes DNS que ce serveur ne sait pas résoudre sont forwardées aux DNS publics `1.1.1.1` et `8.8.8.8`.
 
-```makefile
-include "/var/lib/samba/bind-dns/named.conf";
-```
-
-```bash
-tech@hermes:~$ sudo nano /etc/bind/named.conf.options
-```
-
-```text
-recursion yes;
-allow-recursion { 10.0.0.0/24; };
-
-allow-query { any; };
-dnssec-validation auto;
-
-listen-on { 10.0.0.10; };
-
-forwarders {
-	1.1.1.1;
-	8.8.8.8;
-};
-
-tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";
-```
-
-```bash
-tech@hermes:~$ sudo chown bind:bind /var/lib/samba/bind-dns/dns.keytab
-tech@hermes:~$ sudo chmod 640 /var/lib/samba/bind-dns/dns.keytab
-```
-
-```bash
-tech@hermes:~$ sudo systemctl disable --now systemd-resolved
-tech@hermes:~$ sudo rm /etc/resolv.conf
-tech@hermes:~$ echo "nameserver 10.0.0.10" | sudo tee /etc/resolv.conf
-tech@hermes:~$ sudo systemctl restart bind9
-tech@hermes:~$ sudo systemctl restart samba-ad-dc
-```
-
-## Kerberos
-
-```bash
-tech@hermes:~$ sudo nano /etc/krb5.conf
-```
+Le fichier `/etc/krb5.conf` est configuré ainsi :
 
 ```ini
 [libdefaults]
@@ -238,20 +191,24 @@ tech@hermes:~$ sudo nano /etc/krb5.conf
     }
 ```
 
-## DHCP
+Les DNS records sont également configurés, en prévision de la mise en place des différents services :
 
-```bash
-tech@hermes:~$ sudo apt install isc-dhcp-server -y
-tech@hermes:~$ sudo nano /etc/default/isc-dhcp-server
-```
+- A
+  ```bash
+  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local ares A 10.0.0.1
+  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local metis A 10.0.0.20
+  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local athena A 10.0.0.30
+  ```
 
-```bash
-INTERFACESv4="ens33"
-```
+- MX
+  ```bash
+  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local @ MX "athena.grestin.local 10"
+  ```
 
-```bash
-tech@hermes:~$ sudo nano /etc/dhcp/dhcpd.conf
-```
+- #### DHCP
+
+Nous configurons le service DHCP du serveur, en installant isc-dhcp-server.
+Les paramètres du DHCP sont configurés dans le fichier `/etc/dhcp/dhcpd.conf`.
 
 ```pqsql
 default-lease-time 600;
@@ -266,35 +223,153 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 }
 ```
 
-```bash
-tech@hermes:~$ sudo systemctl restart isc-dhcp-server
-tech@hermes:~$ sudo systemctl enable isc-dhcp-server
+Nous définissons une plage de 100 addresses dynamiques, qui devrait convenir pour le nombre de stations d'inspecteurs. Le service DHCP distribue également les informations DNS.
+
+- #### Groupes et utilisateurs du domaine
+
+Nous créons deux utilisateurs et deux groupes sur le domaine :
+1. tech@grestin.local, dans le groupe IT
+2. inspector@grestin.local, dans le groupe Inspectors
+
+Cela nous permet de mutualiser les utilisateurs du domaine pour permettre aux inspecteurs d'accéder à leurs boites mails sur n'importe quelle station, et cela facilite également la gestion des permissions d'accès au partage NAS notamment.
+
+---
+
+### metis - Network Attached Storage
+
+Nous définissons l'adressage IPv4 du serveur.
+
+```yaml
+ens33:
+    dhcp4: false
+    addresses: [10.0.0.20/24]
+    routes:
+        - to: 0.0.0.0/0
+          via: 10.0.0.1
+    nameservers:
+        addresses: [10.0.0.10]
 ```
 
-## DNS records
+L'interface `ens33` correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique `10.0.0.20`.
+Nous indiquons l'addresse IP de Ares en passerelle, et l'adresse IP de Hermes en DNS.
 
-- ### A
-  ```bash
-  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local ares A 10.0.0.1
-  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local metis A 10.0.0.20
-  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local athena A 10.0.0.30
-  ```
+Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.
+L'utilisateur `tech@grestin.local` est ajoutée à la liste des sudoers du serveur.
 
-- ### MX
-  ```bash
-  tech@hermes:~$ samba-tool dns add hermes.grestin.local grestin.local @ MX "athena.grestin.local 10"
-  ```
+- #### RAID 5
 
-## Groupes et utilisateurs
+4 disques durs virtuels de 2GB chacun sont ajoutés sur le serveur à froid.
+Nous installons mdadm pour monter les disques en une partition RAID5.
 
-```bash
-tech@hermes:~$ sudo samba-tool user create tech Sup1nf0
-tech@hermes:~$ sudo samba-tool user create IT Sup1nf0
-tech@hermes:~$ sudo samba-tool group addmembers IT tech
-tech@hermes:~$ sudo samba-tool user create inspector Sup1nf0
-tech@hermes:~$ sudo samba-tool user create Inspectors Sup1nf0
-tech@hermes:~$ sudo samba-tool group addmembers Inspectors inspector
-tech@hermes:~$ sudo samba-tool computer create METIS
-tech@hermes:~$ sudo samba-tool computer create ATHENA
-tech@hermes:~$ sudo samba-tool computer create station-001
+La partition est montée sur le dossier `/srv/raid5`.
+
+Les informations du montage sont inscrites dans `/etc/fstab` pour que la partition soit automatiquement montées après chaque redémarrage du serveur :
+
+```ini
+/dev/md0 /srv/raid5 ext4 defaults 0 2
 ```
+
+- #### NAS
+
+Nous mettons en place le service de partage NAS, en installant nfs-kernel-server. Nous avons choisi NFS par simplicité car tous les équipements du réseau fonctionnent sur Linux.
+
+Un dossier `share/` est créé sur `/srv/raid5/`. Le partage est paramétré dans le fichier `/etc/exports` :
+
+```ini
+/srv/raid5/share 10.0.0.30(rw,sync,no_subtree_check)
+```
+
+- #### Contenu du partage
+
+Le partage est structuré ainsi :
+
+```
+├──cases/ 
+|   ├── pending/
+|   ├── rejected/
+|   └── accepted/
+└──mail/
+    ├── tech@grestin.local/Maildir/{cur,new,tmp}
+    └── inspector@grestin.local/Maildir/{cur,new,tmp}
+```
+
+Cela nous permet de mutualiser deux types de données sur le réseau : les candidatures traitées ou en attente de traitement, et les boites mails des utilisateurs du domaine.
+
+- #### SSH
+
+Nous installons openssh-server sur le serveur afin de permettre la communication SSH avec le serveur de téléchargement de fichiers externe. Les candidatures peuvent ainsi être ajoutées via SFTP par SSH dans le dossier `/srv/raid5/share/cases/pending`.
+
+---
+
+### athena - Internal Server
+
+Nous définissons l'adressage IPv4 du serveur.
+
+```yaml
+ens33:
+    dhcp4: false
+    addresses: [10.0.0.30/24]
+    routes:
+        - to: 0.0.0.0/0
+          via: 10.0.0.1
+    nameservers:
+        addresses: [10.0.0.10]
+```
+
+L'interface `ens33` correspond à la carte réseau Host-Only. Nous attribuons arbitrairement l'IP statique `10.0.0.30`.
+Nous indiquons l'addresse IP de Ares en passerelle, et l'adresse IP de Hermes en DNS.
+
+Le serveur rejoint le domaine, grâce à l'installation et à la configuration des services realmd, sssd, adcli, samba-common-bin, krb5-user et packagekit.
+L'utilisateur `tech@grestin.local` est ajoutée à la liste des sudoers du serveur.
+
+- #### Montage du NAS
+
+Nous installons nfs-common pour monter le NAS sur le serveur.
+La configuration du montage est définie dans le fichier `/etc/fstab`.
+
+```ini
+10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0
+```
+
+- #### Mail Server
+
+Ce serveur distribue le service mail pour le réseau interne.
+Pour la gestion de boîtes mails, nous installons et paramétrons les services dovecot-core, dovecot-imapd et dovecot-lmtpd.
+
+Dans le fichier `/etc/dovecot/conf.d/10-mail.conf`, nous paramétrons les boîtes mails pour qu'elles soient créées sur le partage NAS :
+
+```ini
+mail_location = maildir:/mnt/nas/mail/%n/Maildir
+```
+
+L'accès aux boîtes mails se fait par telnet :
+
+```
+tech@grestin.local@athena:~$ telnet localhost 143
+>> a login tech@grestin.local Sup1nf0
+>> a select INBOX
+```
+
+Nous installons également les services postfix et mailutils, qui sont chargés de transporter les mails jusqu'aux boîtes.
+Nous avons décidé de ne pas utiliser les services TLS de Postfix par simplicité. Le reste du paramétrage est classique.
+
+---
+
+### station-001 - Client
+
+Les clients utilisent Ubuntu 24.04.3 Desktop. Ils rejoignent le domaine à l'installation de l'OS.
+L'addressage IP se fait dynamiquement, via les services de Hermes. 
+
+L'utilisateur `tech@grestin.local` est ajoutée à la liste des sudoers du client.
+
+- #### Montage du NAS
+
+Nous installons nfs-common pour monter le NAS sur le client.
+La configuration du montage est définie dans le fichier `/etc/fstab`.
+
+```ini
+10.0.0.20:/srv/raid5/share /mnt/nas nfs defaults,_netdev 0 0
+```
+
+
+
