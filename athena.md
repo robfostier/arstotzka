@@ -6,7 +6,7 @@ Server name : athena
 username : tech
 password : Sup1nf0 
 
-cartes réseau :
+Carte réseau :
 VMnet10 (host-only) : 10.0.0.0/24
 
 ```bash
@@ -35,7 +35,7 @@ ens33:
 tech@athena:~$ sudo netplan apply
 ```
 
-## Configuraton Active Directory
+## Configuration Active Directory
 
 ```bash
 tech@athena:~$ sudo nano /etc/hosts

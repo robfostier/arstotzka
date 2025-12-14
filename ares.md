@@ -6,7 +6,7 @@ Server name : ares
 username : tech
 password : Sup1nf0 
 
-cartes réseau :
+Cartes réseau :
 VMnet8 (NAT)
 VMnet10 (host-only) : 10.0.0.0/24
 

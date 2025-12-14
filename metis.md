@@ -6,8 +6,7 @@ Server name : metis
 username : tech
 password : Sup1nf0 
 
-cartes réseau :
-VMnet8 (NAT)
+Carte réseau :
 VMnet10 (host-only) : 10.0.0.0/24
 
 ```bash

@@ -1,4 +1,4 @@
-# hermes - Serveur DHCP + DNS
+# hermes - Serveur AD + DNS + DHCP
 Ubuntu 24.04.3 Live Server
 
 Name : Technician
@@ -6,7 +6,7 @@ Server name : hermes
 username : tech
 password : Sup1nf0 
 
-cartes réseau :
+Carte réseau :
 VMnet10 (host-only) : 10.0.0.0/24
 
 ## Configuration Host-only
@@ -16,7 +16,7 @@ tech@hermes:~$ sudo nano /etc/netplan/50-cloud-init.yaml
 ```
 
 ```yaml
-ens37:
+ens33:
     dhcp4: false
     addresses: [10.0.0.10/24]
     routes:

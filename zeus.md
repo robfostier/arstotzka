@@ -6,7 +6,7 @@ Server name : zeus
 username : tech
 password : Sup1nf0 
 
-cartes réseau :
+Carte réseau :
 VMnet8 (NAT)
 
 ```bash
