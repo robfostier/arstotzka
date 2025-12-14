@@ -148,3 +148,11 @@ tech@metis:~$ sudo systemctl restart sssd
 tech@metis:~$ sudo sss_cache -E
 tech@metis:~$ su -t tech@grestin.local
 ```
+
+## SSH
+
+```bash
+tech@metis:~$ sudo apt install openssh-server -y
+tech@metis:~$ sudo systemctl enable --now ssh
+tech@metis:~$ sudo systemctl status ssh
+```

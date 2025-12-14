@@ -1,8 +1,7 @@
 #!/bin/bash
-#Rôle : Vérifier automatiquement les documents déposés par les immigrés.
-UPLOAD_DIR="/srv/immigration/uploads"
-VALID_DIR="/srv/immigration/valid"
-INVALID_DIR="/srv/immigration/invalid"
+UPLOAD_DIR="/srv/sftp/immigrant/uploads"
+VALID_DIR="/srv/sftp/immigrant/valid"
+INVALID_DIR="/srv/sftp/immigrant/invalid"
 
 for archive in "$UPLOAD_DIR"/*.zip; do
     [ -e "$archive" ] || continue
@@ -13,20 +12,20 @@ for archive in "$UPLOAD_DIR"/*.zip; do
 
     if ! ls "$TMPDIR"/*.txt >/dev/null 2>&1; then
         mv "$archive" "$INVALID_DIR"
-        echo "[REFUS] $ID : aucun fichier TXT"
+        echo "[REJECT] $ID : can't find .txt"
         rm -r "$TMPDIR"
         continue
     fi
 
     if ! ls "$TMPDIR"/*.pdf >/dev/null 2>&1; then
         mv "$archive" "$INVALID_DIR"
-        echo "[REFUS] $ID : aucun fichier PDF"
+        echo "[REJECT] $ID : can't find .pdf"
         rm -r "$TMPDIR"
         continue
     fi
 
     mv "$archive" "$VALID_DIR"
-    echo "[OK] $ID : documents conformes"
+    echo "[OK] $ID : valid archive"
 
     rm -r "$TMPDIR"
 done
